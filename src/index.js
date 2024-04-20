@@ -1,6 +1,5 @@
 'use strict';
-import * as catsApi from './cat-api';
+// import * as catsApi from './cat-api';
+// import axios from 'axios';
 
-const api = catsApi.apiKey;
-const apiKey =
-  'live_CxkNmiyyb6IlYY7a06bc6CPiONxdV78sZd9uarhcRkpu9pj6qYequ5IHvIxpkRWC';
+// axios.defaults.headers.common['x-api-key'] = catsApi.apiKey;
