@@ -26,8 +26,6 @@ img {
     color: rgb(252, 3, 3)
 }
 
-
-
 .cat-info{
     display: flex;
     gap: 20px;
@@ -47,4 +45,10 @@ img {
 
 .span-text{
     font-weight: 600;
+}
+
+@media screen and (max-width: 767px) {
+    .cat-info {
+            flex-direction: column;
+        }
 }
