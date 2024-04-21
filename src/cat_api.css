@@ -14,8 +14,8 @@ img {
     object-fit: cover;
 }
 
-.breed-select{
-    width: 250px;
+.ss-main{
+    max-width: 250px;
 }
 
 .hidden{
