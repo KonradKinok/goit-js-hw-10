@@ -51,4 +51,8 @@ img {
     .cat-info {
             flex-direction: column;
         }
+
+    .text-container {
+            width: 400px;
+        }
 }
