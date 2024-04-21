@@ -1,72 +1,65 @@
 'use strict';
 //Import
 import axios from 'axios';
-import SlimSelect from 'slim-select';
-import 'slim-select/dist/slimselect.css';
-//Notify
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 const optionsNotify = {
   timeout: 6000,
 };
 
-export const apiKey =
+//ApiKey
+const apiKey =
   'live_CxkNmiyyb6IlYY7a06bc6CPiONxdV78sZd9uarhcRkpu9pj6qYequ5IHvIxpkRWC';
-// axios.defaults.headers.common['x-api-key'] = apiKey;
 
-//tablica danych combobox
-let comboboxData = [];
-const combobox = new SlimSelect({
-  select: '#combobox',
-  settings: {
-    openPosition: 'auto', // 'auto', 'up' or 'down'
-    placeholderText: 'No data1',
-    allowDeselect: true,
-    disabled: false,
-    selected: true,
-    showSearch: false,
-    showOptionTooltips: true,
-    hideSelected: false,
-  },
-});
-// function fetchBreeds() {}
-fetchBreeds();
-async function fetchBreeds() {
+//Axios header - api key
+axios.defaults.headers.common['x-api-key'] = apiKey;
+
+//Functions
+/**fetchBreeds
+ *
+ * @returns object
+ */
+export async function fetchBreeds() {
   try {
-    const allDataCats = await getAllDataCats();
+    const allDataCats = await getAllBreedsCats();
     const arrNameOfCats = addCatsToTable(allDataCats);
-    const comboboxData = [{ text: '', placeholder: true }, ...arrNameOfCats];
-    // comboboxData.forEach(element => {
-    //   console.log(element.text);
-    // });
+    const arrCombobox = [{ text: '', placeholder: true }, ...arrNameOfCats];
+    return arrCombobox;
   } catch (error) {
     Notify.failure(`${error}`, optionsNotify);
-    console.log(error);
   }
 }
 
-async function getAllDataCats() {
-  const params = new URLSearchParams({
-    // _limit: perPage_s1a4,
-    // _page: page_s1a4,
-  });
-
+/**getAllBreedsCats
+ *
+ * @returns object
+ */
+async function getAllBreedsCats() {
   const response = await axios.get(`https://api.thecatapi.com/v1/breeds`);
   return response.data;
 }
 
-/**
+/**fetchCatByBreed
  *
- * @param {*} cats
- * @returns Array
+ * @param {string} breedId
+ * @returns object
  */
-function addCatsToTable(cats) {
-  const tempTable = cats.map(({ id, name }) => {
-    return { text: `${name}`, value: `${id}` };
+export async function fetchCatByBreed(breedId) {
+  const searchParams = new URLSearchParams({
+    breed_ids: breedId,
   });
-
-  return tempTable;
+  const url = `https://api.thecatapi.com/v1/images/search?${searchParams}`;
+  const response = await axios.get(url);
+  return response.data;
 }
 
-// data.push({ text: '', placeholder: true });
-// comboboxData.push({ text: 'Option 4', value: 'option4' });
-// comboboxData.push({ text: 'Option 14', value: 'option14' });
+/**addCatsToTable
+ *
+ * @param {object} cats
+ * @returns object
+ */
+function addCatsToTable(cats) {
+  const arr = cats.map(({ id, name }) => {
+    return { text: `${name}`, value: `${id}` };
+  });
+  return arr;
+}
