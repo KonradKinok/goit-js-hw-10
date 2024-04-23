@@ -3,8 +3,7 @@ body {
     font-size: 18px;
     color: black;
     background: rgb(223, 217, 217);
-    margin-left:20px;
-    margin-top: 20px;
+    margin: 10px 5px;
 }
 
 img {
@@ -48,6 +47,7 @@ img {
 }
 
 @media screen and (max-width: 767px) {
+    
     .cat-info {
             flex-direction: column;
         }
